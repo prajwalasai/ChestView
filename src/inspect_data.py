@@ -6,7 +6,7 @@ from PIL import Image
 # ===========================================================
 # EDIT THIS ONE LINE: paste the folder that contains your images.
 # Subfolders are fine. Keep the r before the quotes.
-IMAGES_ROOT = r"C:\Users\mache\Downloads\images.zip\images"
+IMAGES_ROOT = r"C:\Users\mache\Downloads\images\images"
 # ===========================================================
 
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

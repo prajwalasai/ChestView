@@ -1,0 +1,16 @@
+Test images: 1560
+Accuracy: 95.51%
+ROC AUC: 0.9932
+
+              precision    recall  f1-score   support
+
+          AP      0.931     0.983     0.956       780
+          PA      0.982     0.927     0.954       780
+
+    accuracy                          0.955      1560
+   macro avg      0.957     0.955     0.955      1560
+weighted avg      0.957     0.955     0.955      1560
+
+Confusion matrix (rows = actual, columns = predicted; order AP, PA):
+[[767  13]
+ [ 57 723]]
