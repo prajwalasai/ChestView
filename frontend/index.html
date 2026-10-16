@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChestView - Chest X-ray View Classifier</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="container header-inner">
+            <h1 class="logo">Chest<span>View</span></h1>
+            <nav>
+                <a href="#classifier">Classifier</a>
+                <a href="#about">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Identify the view position of a chest X-ray</h2>
+                <p>
+                    Upload a chest X-ray and our deep learning model will predict whether
+                    it is a <strong>PA</strong> (Posterior-Anterior) or
+                    <strong>AP</strong> (Anterior-Posterior) view.
+                </p>
+            </div>
+        </section>
+
+        <section id="classifier" class="container">
+            <div class="card">
+
+                <div id="drop-zone" class="drop-zone" tabindex="0">
+                    <input type="file" id="file-input" accept="image/png, image/jpeg" hidden />
+                    <p class="drop-title">Drag and drop your X-ray here</p>
+                    <p class="drop-sub">or click to browse (JPG or PNG, up to 10 MB)</p>
+                </div>
+
+                <div id="preview-area" class="preview-area hidden">
+                    <img id="preview-img" alt="Selected X-ray preview" />
+                    <p id="file-name" class="file-name"></p>
+                </div>
+
+                <div class="actions">
+                    <button id="analyze-btn" class="btn primary" disabled>Analyze X-ray</button>
+                    <button id="reset-btn" class="btn secondary hidden">Clear</button>
+                </div>
+
+                <div id="loader" class="loader hidden">
+                    <div class="spinner"></div>
+                    <p>Analyzing image...</p>
+                </div>
+
+                <div id="error-box" class="error-box hidden"></div>
+
+                <div id="result" class="result hidden">
+                    <p class="result-label">Predicted view</p>
+                    <h3 id="result-view">-</h3>
+                    <p id="result-full" class="result-full"></p>
+                    <div class="confidence">
+                        <div class="confidence-head">
+                            <span>Confidence</span>
+                            <span id="confidence-text">0%</span>
+                        </div>
+                        <div class="bar">
+                            <div id="confidence-bar" class="bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="about" class="container about">
+            <h2>About this project</h2>
+            <p>
+                ChestView classifies the <strong>view position</strong> of a chest X-ray.
+                It does <strong>not</strong> diagnose any disease.
+            </p>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h3>PA view</h3>
+                    <p>
+                        Posterior-Anterior. The X-ray beam enters from the back and exits
+                        through the front of the chest. Usually taken with the patient standing.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <h3>AP view</h3>
+                    <p>
+                        Anterior-Posterior. The beam enters from the front and exits through
+                        the back. Common for patients who are bedridden or cannot stand.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>ChestView - for educational purposes only. Not a medical diagnosis tool.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
