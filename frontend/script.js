@@ -1,8 +1,8 @@
 // ===== Settings =====
 // While the backend is not built yet, DEMO_MODE = true shows a fake result.
 // When the backend is ready, change it to false.
-const DEMO_MODE = true;
-const API_URL = "http://127.0.0.1:5000/predict";
+const DEMO_MODE = false;
+const API_URL = "/predict";
 const MAX_SIZE_MB = 10;
 
 // ===== Page elements =====
@@ -135,6 +135,9 @@ function showResult(data) {
     resultView.textContent = data.view;
     resultFull.textContent =
         data.view === "PA" ? "Posterior-Anterior view" : "Anterior-Posterior view";
+    if (data.demo) {
+        resultFull.textContent += " (placeholder result - model not trained yet)";
+    }
     confidenceText.textContent = percent + "%";
     confidenceBar.style.width = "0%";
     resultBox.classList.remove("hidden");
