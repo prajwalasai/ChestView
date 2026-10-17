@@ -1,4 +1,3 @@
-
 # ChestView
 
 **Automated chest X-ray view position classification using deep learning.**
@@ -45,7 +44,8 @@ ChestView/
 |   |-- inspect_data.py        Checks the dataset and labels
 |   |-- prepare_data.py        Builds the balanced, resized dataset
 |   |-- train_model.py         Trains and saves the model
-|   `-- evaluate_model.py      Evaluates the model on test images
+|   |-- evaluate_model.py      Evaluates the model on test images
+|   `-- check_mixed.py         Checks the model on a folder of images
 |-- models/
 |   |-- chestview_model.keras  Trained model
 |   |-- training_curves.png
@@ -76,7 +76,7 @@ ChestView/
 - Light data augmentation (small zoom, shift, rotation and contrast changes).
 - Phase 1: train the new final layer. Phase 2: fine-tune the top layers of MobileNetV2 with a low learning rate.
 
-## Results (test set, 1,560 unseen images)
+## Results (test set, 1,560 unseen images from the same dataset)
 
 | Metric | Value |
 |---|---|
@@ -92,7 +92,7 @@ Confusion matrix (rows = actual, columns = predicted):
 | **Actual AP** | 767 | 13 |
 | **Actual PA** | 57 | 723 |
 
-The model is slightly more likely to label a PA image as AP than the other way around.
+On this test set the model is slightly more likely to label a PA image as AP than the other way around.
 
 ## Getting started (Windows)
 
@@ -129,16 +129,20 @@ python src/train_model.py
 python src/evaluate_model.py
 ```
 
-Set `QUICK_TEST = False` in `src/train_model.py` for the full training run. Training takes about 30 to 60 minutes on a laptop CPU.
+Set `QUICK_TEST = False` in `src/train_model.py` for the full training run. Training takes roughly 15 to 30 minutes on a laptop CPU.
 
 ## Limitations
 
 - The model only classifies view position (PA or AP). It cannot detect diseases.
-- It was trained on one dataset, so results may differ on images from other hospitals or machines.
+- The reported accuracy applies to images from the same dataset the model was trained on.
+- The model was trained on a single dataset. In informal testing with a few images downloaded from the internet, some images believed to be AP were classified as PA. Internet images often differ from the training data (compression, cropping, shape, contrast), and their view labels could not always be verified, so performance on images from other sources has not been measured.
 - AP images are often taken at the bedside and may contain devices such as tubes or monitors, so the model may partly rely on such cues.
 - For educational use only. It is not a medical device.
 
 ## Team
 
-- prajwala sai macherla
-- (add your teammate's name)
+- Macherla Prajwala Sai
+- teammate's name-Motla Roja
+                 -Mugdha Arelly
+                 -Sanith Kumar
+                 -D.Sreethu
