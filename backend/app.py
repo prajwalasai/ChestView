@@ -37,10 +37,15 @@ def load_model():
 
 def prepare_image(file_stream):
     """Opens the uploaded image and turns it into the shape the model expects."""
-    img = Image.open(file_stream).convert("RGB")   # X-rays can be grayscale
-    img = img.resize(IMG_SIZE)
-    arr = np.array(img, dtype="float32")           # pixel values 0 to 255
-    return np.expand_dims(arr, axis=0)             # shape (1, 224, 224, 3)
+    img = Image.open(file_stream)
+    if img.mode.startswith("I"):                       # 16-bit or 32-bit grayscale PNG
+        arr = np.array(img, dtype="float32")
+        span = max(float(arr.max() - arr.min()), 1.0)
+        arr = (arr - arr.min()) / span * 255.0
+        img = Image.fromarray(arr.astype("uint8"))
+    img = img.convert("RGB").resize(IMG_SIZE)          # X-rays can be grayscale
+    arr = np.array(img, dtype="float32")               # pixel values 0 to 255
+    return np.expand_dims(arr, axis=0)                 # shape (1, 224, 224, 3)
 
 
 # ===== Website pages =====
@@ -71,7 +76,7 @@ def predict():
 
     try:
         batch = prepare_image(file.stream)
-    except (UnidentifiedImageError, OSError):
+    except Exception:
         return jsonify({"error": "The file is not a valid image."}), 400
 
     # Placeholder mode (no trained model yet)

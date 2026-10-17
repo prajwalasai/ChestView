@@ -92,9 +92,11 @@ analyzeBtn.addEventListener("click", async () => {
         const data = DEMO_MODE ? await fakePredict() : await realPredict();
         showResult(data);
     } catch (err) {
-        showError(
-            "Could not get a prediction. Is the backend running? (" + err.message + ")"
-        );
+        if (err.message === "Failed to fetch") {
+            showError("Could not reach the backend. Is the server running?");
+        } else {
+            showError(err.message);
+        }
     } finally {
         loader.classList.add("hidden");
         analyzeBtn.disabled = false;
@@ -112,7 +114,12 @@ async function realPredict() {
     });
 
     if (!response.ok) {
-        throw new Error("Server error " + response.status);
+        let message = "Server error " + response.status;
+        try {
+            const err = await response.json();
+            if (err.error) message = err.error;
+        } catch (e) { }
+        throw new Error(message);
     }
     return await response.json(); // expected: { "view": "PA", "confidence": 0.97 }
 }
